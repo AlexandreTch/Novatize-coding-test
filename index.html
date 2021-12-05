@@ -4,9 +4,10 @@
 <head>
   <link rel="stylesheet" href="src/styles.css" />
   <link rel="shortcut icon" type="image/png"
-    href="https://novatize.com/app/themes/novatize/dist/images/favicon-32x32.png" />
+  href="https://novatize.com/app/themes/novatize/dist/images/favicon-32x32.png" />
   <title>Novatize Frontend Challenge</title>
   <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
 
 <body>
@@ -96,6 +97,29 @@
             </select>
           </div>
         </div>
+
+        <div class="row">
+          <div class="form__control column">
+            <label>Email</label>
+            <div class="form__control-input">
+              <input type="email" name="email" id="email" />
+              <i class="fa fa-check-circle"></i>
+              <i class="fa fa-exclamation-circle"></i>
+            </div>
+            <small>Must not be blank</small>
+          </div>
+          <div class="form__control column">
+            <label>Confirm Email</label>
+            <div class="form__control-input">
+              <input type="email" name="confirm-email" id="confirm-email" />
+              <i class="fa fa-check-circle"></i>
+              <i class="fa fa-exclamation-circle"></i>
+            </div>
+            <small>Must not be blank</small>
+          </div>
+        </div>  
+
+        
         <div class="row">
           <div class="form__control column">
             <label>Password</label>

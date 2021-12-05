@@ -14,7 +14,7 @@ initCookieBanner();
 populateDoggoBreedSelect();
 
 function initFormListeners(formToInit) {
-  formToInit.addEventListener("submit", e => {
+  formToInit.addEventListener("submit", (e) => {
     e.preventDefault();
     if (validateAllInputs()) {
       displaySuccessModal();
@@ -28,52 +28,55 @@ function initModals(successModalToInit) {
   for (let el of closeButtons) {
     el.onclick = function () {
       successModalToInit.style.display = "none";
-    }
+    };
   }
 
   window.onclick = function (event) {
     if (event.target == successModal) {
       successModalToInit.style.display = "none";
     }
-  }
+  };
 }
 
 function initCookieBanner() {
-  let acceptCookiesButton = document.querySelector("#cookie-banner .button__primary");
+  let acceptCookiesButton = document.querySelector(
+    "#cookie-banner .button__primary"
+  );
   acceptCookiesButton.onclick = function () {
     let cookieBanner = document.getElementById("cookie-banner");
 
     cookieBanner.style.display = "none";
-  }
+  };
 
-  let rejectCookiesButton = document.querySelector("#cookie-banner .button__secondary");
+  let rejectCookiesButton = document.querySelector(
+    "#cookie-banner .button__secondary"
+  );
   rejectCookiesButton.onclick = function () {
     let cookieBanner = document.getElementById("cookie-banner");
     let submitButton = document.querySelector("form button");
 
     submitButton.disabled = true;
     cookieBanner.style.display = "none";
-  }
+  };
 }
 
 function populateDoggoBreedSelect() {
-  fetch('https://api.devnovatize.com/frontend-challenge')
-    .then(
-      function (response) {
-        if (!response.ok) {
-          console.log('Error calling external API. Status Code: ' +
-            response.status);
-          return;
-        }
-
-        response.json().then(function (data) {
-          var selectElem = document.getElementById("doggo-breed");
-          fillSelectElem(selectElem, data);
-        });
+  fetch("https://api.devnovatize.com/frontend-challenge")
+    .then(function (response) {
+      if (!response.ok) {
+        console.log(
+          "Error calling external API. Status Code: " + response.status
+        );
+        return;
       }
-    )
+
+      response.json().then(function (data) {
+        var selectElem = document.getElementById("doggo-breed");
+        fillSelectElem(selectElem, data);
+      });
+    })
     .catch(function (err) {
-      console.log('Fetch Error : ', err);
+      console.log("Fetch Error : ", err);
     });
 }
 
@@ -83,19 +86,22 @@ function fillSelectElem(selectElem, dataToFill) {
     optionElem.innerHTML = element;
 
     if (element.toLowerCase() === "labernese") {
-      optionElem.setAttribute("selected", "selected")
+      optionElem.setAttribute("selected", "selected");
     }
     selectElem.appendChild(optionElem);
   });
 }
 
 function validateAllInputs() {
-  let allInputValids = validateInput(firstName) &&
+  let allInputValids =
+    validateInput(firstName) &&
     validateInput(lastName) &&
     validateInput(doggoName) &&
     validateInput(doggoBreed) &&
     validateInput(password, validatePassword) &&
-    validateInput(confirmPassword, function (value) { return value === password.value.trim(); });
+    validateInput(confirmPassword, function (value) {
+      return value === password.value.trim();
+    });
 
   return allInputValids;
 }
@@ -105,7 +111,7 @@ function validateInput(element, validationFunction) {
 
   inputValid ? setSuccessInput(element) : setErrorInput(element);
 
-  return inputValid
+  return inputValid;
 }
 
 function isInputValid(element, validationFunction) {
