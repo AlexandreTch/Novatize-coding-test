@@ -5,8 +5,11 @@ const doggoName = document.getElementById("doggo-name");
 const doggoBreed = document.getElementById("doggo-breed");
 const password = document.getElementById("password");
 const confirmPassword = document.getElementById("confirm-password");
-
+const email = document.getElementById("email");
+const confirmEmail = document.getElementById("confirm-email");
 const successModal = document.getElementById("modal-success");
+const emailErrorMessageNotMatching =
+  document.getElementById("emailErrorMessage");
 
 initFormListeners(form);
 initModals(successModal);
@@ -45,7 +48,8 @@ function initCookieBanner() {
   acceptCookiesButton.onclick = function () {
     let cookieBanner = document.getElementById("cookie-banner");
 
-    cookieBanner.style.display = "none";
+    // cookieBanner.style.display = "none";
+    cookieBanner.classList.toggle("none");
   };
 
   let rejectCookiesButton = document.querySelector(
@@ -69,19 +73,21 @@ function populateDoggoBreedSelect() {
         );
         return;
       }
-
       response.json().then(function (data) {
         var selectElem = document.getElementById("doggo-breed");
         fillSelectElem(selectElem, data);
       });
     })
+
     .catch(function (err) {
       console.log("Fetch Error : ", err);
     });
 }
 
 function fillSelectElem(selectElem, dataToFill) {
-  dataToFill.forEach((element) => {
+  let sortedData = dataToFill.sort();
+
+  sortedData.forEach((element) => {
     var optionElem = document.createElement("option");
     optionElem.innerHTML = element;
 
@@ -102,6 +108,13 @@ function validateAllInputs() {
     validateInput(confirmPassword, function (value) {
       return value === password.value.trim();
     });
+  validateInput(email, validateEmail) &&
+    validateInput(confirmEmail, function (value) {
+      if (value != email.value.trim()) {
+        emailErrorMessageNotMatching.innerHTML = "Email does not match";
+      }
+      return value === email.value.trim();
+    });
 
   return allInputValids;
 }
@@ -109,6 +122,11 @@ function validateAllInputs() {
 function validateInput(element, validationFunction) {
   let inputValid = isInputValid(element, validationFunction);
 
+  for (var i = 0; i < form.elements.length; i++) {
+    const formControl = form.elements[i].parentElement.parentElement;
+    formControl.classList.remove("error");
+    formControl.classList.remove("success");
+  }
   inputValid ? setSuccessInput(element) : setErrorInput(element);
 
   return inputValid;
@@ -118,6 +136,11 @@ function isInputValid(element, validationFunction) {
   let value = element.value.trim();
 
   return !(value === "" || (validationFunction && !validationFunction(value)));
+}
+
+function validateEmail(email) {
+  let pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  return pattern.test(String(email));
 }
 
 function validatePassword(password) {
