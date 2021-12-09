@@ -48,7 +48,6 @@ function initCookieBanner() {
   acceptCookiesButton.onclick = function () {
     let cookieBanner = document.getElementById("cookie-banner");
 
-    // cookieBanner.style.display = "none";
     cookieBanner.classList.toggle("none");
   };
 
@@ -107,8 +106,8 @@ function validateAllInputs() {
     validateInput(password, validatePassword) &&
     validateInput(confirmPassword, function (value) {
       return value === password.value.trim();
-    });
-  validateInput(email, validateEmail) &&
+    }) &&
+    validateInput(email, validateEmail) &&
     validateInput(confirmEmail, function (value) {
       if (value != email.value.trim()) {
         emailErrorMessageNotMatching.innerHTML = "Email does not match";
